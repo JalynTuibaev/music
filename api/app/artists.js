@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', upload.single('image'), async (req, res) => {
-    const {name, info} = req.body;
+    const {name, info, image} = req.body;
 
     if (!name) {
         return res.status(400).send({error: 'Name is Required!'});
@@ -39,7 +39,7 @@ router.post('/', upload.single('image'), async (req, res) => {
     const artistData = {
         name,
         info: info || null,
-        image: null,
+        image: image,
     };
 
     if (req.file) {
