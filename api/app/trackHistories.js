@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/User');
 const TrackHistory = require('../models/TrackHistory');
+const Track = require("../models/Track");
 
 const router = express.Router();
 
@@ -22,6 +23,13 @@ router.post('/', async (req, res) => {
         track: req.body.track,
         datetime: new Date().toISOString(),
     };
+
+
+    const track = await Track.findOne({_id: TrackHistoryData.track});
+
+    if (!track) {
+        return res.status(404).send({error: 'Track not found!'});
+    }
 
     try {
         const trackHistory = new TrackHistory(TrackHistoryData);
