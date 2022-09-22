@@ -3,18 +3,22 @@ import {useHistory, useRouteMatch} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getArtistAlbums} from "../../store/actions/albumsActions";
 import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
+import Spinner from "../../components/UI/Spinner/Spinner";
+import {currentArtist} from "../../store/actions/currentArtistActions";
 
 const Artist = () => {
     const dispatch = useDispatch();
     const match = useRouteMatch();
     const history = useHistory();
     const albums = useSelector(state => state.albums.albums);
+    const loading = useSelector(state => state.albums.loading);
 
     useEffect(() => {
         dispatch(getArtistAlbums(match.params.id));
     }, [dispatch]);
 
-    const onClickAlbum = id => {
+    const onClickAlbum = (id, name) => {
+        dispatch(currentArtist(name));
         history.push(`/albums/${id}`);
     };
 
@@ -22,13 +26,13 @@ const Artist = () => {
         <>
             {albums[0] ?
                 <Typography variant='h4' padding='5px'>
-                    {albums[0].artist.name}
+                    Певец: {albums[0].artist.name}
                 </Typography>: null
             }
             <Box display='flex' flexWrap='wrap' justifyContent='flex-start'>
                 {albums.map(album => (
                     <Card sx={{ width: 250, margin: '10px' }} key={album._id}>
-                        <CardActionArea onClick={() => onClickAlbum(album._id)}>
+                        <CardActionArea onClick={() => onClickAlbum(album._id, album.artist.name)}>
                             <CardMedia
                                 component="img"
                                 height="200"
@@ -54,7 +58,11 @@ const Artist = () => {
         render = <h1>Albums not found</h1>
     }
 
-    return albums && (
+    if (loading) {
+        render = <Spinner/>;
+    }
+
+    return (
         <>
             {render}
         </>

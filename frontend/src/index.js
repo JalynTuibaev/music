@@ -5,15 +5,19 @@ import artistsReducer from "./store/reducers/artistsReducer";
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunk from "redux-thunk";
 import {Provider} from "react-redux";
-import App from './App';
 import albumsReducer from "./store/reducers/albumsReducer";
+import tracksReducer from "./store/reducers/tracksReducer";
+import App from './App';
 import './index.css';
+import currentArtistReducer from "./store/reducers/currentArtistReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     artists: artistsReducer,
     albums: albumsReducer,
+    tracks: tracksReducer,
+    currentArtist: currentArtistReducer,
 });
 
 const store = createStore(

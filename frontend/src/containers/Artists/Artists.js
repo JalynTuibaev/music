@@ -3,11 +3,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {getArtists} from "../../store/actions/artistsActions";
 import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
 import {useHistory} from "react-router-dom";
+import Spinner from "../../components/UI/Spinner/Spinner";
+import {currentArtist} from "../../store/actions/currentArtistActions";
 
 const Artists = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const artists = useSelector(state => state.artists.artists);
+    const loading = useSelector(state => state.artists.loading);
 
     useEffect(() => {
         dispatch(getArtists());
@@ -17,11 +20,10 @@ const Artists = () => {
         history.push('/artists/' + id);
     };
 
-
-    return artists && (
+    let render = artists && (
         <Box display='flex' flexWrap='wrap' justifyContent='flex-start'>
             {artists.map(artist => (
-                <Card sx={{ width: 250, margin: '10px' }} key={artist.name}>
+                <Card sx={{ width: 250, margin: '10px' }} key={artist._id}>
                     <CardActionArea onClick={() => onClickArtist(artist._id)}>
                         <CardMedia
                             component="img"
@@ -38,6 +40,17 @@ const Artists = () => {
                 </Card>
             ))}
         </Box>
+    );
+
+    if (loading) {
+        render = <Spinner/>;
+    }
+
+
+    return (
+       <>
+           {render}
+       </>
     );
 };
 
