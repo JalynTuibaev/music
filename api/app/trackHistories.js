@@ -18,6 +18,7 @@ router.post('/', async (req, res) => {
         return res.status(401).send({error: 'Token wrong!'});
     }
 
+
     const TrackHistoryData = {
         user: user.id,
         track: req.body.track,
@@ -25,11 +26,12 @@ router.post('/', async (req, res) => {
     };
 
 
-    const track = await Track.findOne({_id: TrackHistoryData.track});
-
-    if (!track) {
+    try {
+        await Track.findOne({_id: req.body.track});
+    } catch {
         return res.status(404).send({error: 'Track not found!'});
     }
+
 
     try {
         const trackHistory = new TrackHistory(TrackHistoryData);
