@@ -4,7 +4,6 @@ import {getArtists} from "../../store/actions/artistsActions";
 import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
 import {useHistory} from "react-router-dom";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import {currentArtist} from "../../store/actions/currentArtistActions";
 
 const Artists = () => {
     const dispatch = useDispatch();

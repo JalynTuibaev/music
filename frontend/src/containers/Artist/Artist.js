@@ -15,7 +15,7 @@ const Artist = () => {
 
     useEffect(() => {
         dispatch(getArtistAlbums(match.params.id));
-    }, [dispatch]);
+    }, [dispatch, match.params.id]);
 
     const onClickAlbum = (id, name) => {
         dispatch(currentArtist(name));

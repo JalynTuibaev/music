@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useRouteMatch} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getTracks} from "../../store/actions/tracksActions";
-import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
+import {Box, Card, CardActionArea, CardContent, Typography} from "@mui/material";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import {clearCurrentArtist} from "../../store/actions/currentArtistActions";
 
@@ -15,7 +15,7 @@ const Album = () => {
 
     useEffect(() => {
         dispatch(getTracks(match.params.id));
-    }, [dispatch]);
+    }, [dispatch, match.params.id]);
 
     useEffect(() => {
         return () => {
