@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {BrowserRouter} from "react-router-dom";
+import {Router} from "react-router-dom";
 import artistsReducer from "./store/reducers/artistsReducer";
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunk from "redux-thunk";
@@ -11,6 +11,7 @@ import App from './App';
 import './index.css';
 import currentArtistReducer from "./store/reducers/currentArtistReducer";
 import usersReducer from "./store/reducers/usersReducer";
+import history from "./history";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -30,9 +31,9 @@ const store = createStore(
 
 const app = (
     <Provider store={store}>
-        <BrowserRouter>
+        <Router history={history}>
             <App/>
-        </BrowserRouter>
+        </Router>
     </Provider>
 );
 
