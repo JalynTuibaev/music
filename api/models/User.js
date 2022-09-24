@@ -8,7 +8,15 @@ const UserSchema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        validate: {
+            validator: async value => {
+                const user = await User.findOne({username: value});
+
+                if (user) return false;
+            },
+            message: 'This user is already registered!'
+        }
     },
     password: {
         type: String,
@@ -47,6 +55,6 @@ UserSchema.methods.generateToken = function () {
 };
 
 
-const user = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
-module.exports = user;
+module.exports = User;

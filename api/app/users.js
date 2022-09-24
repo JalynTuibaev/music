@@ -4,24 +4,16 @@ const User = require('../models/User');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    const {username, password} = req.body;
-
-    if (!username || !password) {
-        return res.status(401).send({error: 'Data not valid!'});
-    }
-
-    const userData = {
-        username,
-        password,
-    };
-
     try {
+        const {username, password} = req.body;
+        const userData = {username, password};
+
         const user = new User(userData);
         user.generateToken();
         await user.save();
         res.send(user);
     } catch (e) {
-        res.status(500).send(e);
+        res.status(400).send(e);
     }
 });
 

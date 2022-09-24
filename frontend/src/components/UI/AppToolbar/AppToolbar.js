@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppBar, Grid, Toolbar, Typography} from "@mui/material";
+import {AppBar, Button, Grid, Toolbar, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 
 
@@ -9,11 +9,16 @@ const AppToolbar = () => {
             <AppBar position="fixed" sx={{backgroundColor: '#3f51b5'}}>
                 <Toolbar>
                     <Grid container justifyContent="space-between" alignItems="center">
-                        <Typography variant="h6">
+                        <Grid item>
                             <Typography variant='h6' sx={{textDecoration: 'none', color: 'white'}} component={Link} to="/">
                                 Music FM
                             </Typography>
-                        </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Button component={Link} to="/register" color="inherit">
+                                Sign Up
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Toolbar>
             </AppBar>

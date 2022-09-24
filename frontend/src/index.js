@@ -10,6 +10,7 @@ import tracksReducer from "./store/reducers/tracksReducer";
 import App from './App';
 import './index.css';
 import currentArtistReducer from "./store/reducers/currentArtistReducer";
+import usersReducer from "./store/reducers/usersReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     albums: albumsReducer,
     tracks: tracksReducer,
     currentArtist: currentArtistReducer,
+    users: usersReducer,
 });
 
 const store = createStore(
