@@ -45,7 +45,7 @@ export const loginUser = userData => {
             dispatch(loginUserRequest());
             const response = await axiosApi.post('/users/sessions', userData);
 
-            dispatch(loginUserSuccess(response.data.user));
+            dispatch(loginUserSuccess(response.data));
             dispatch(historyPush('/'));
         } catch (e) {
             if (e.response && e.response.data) {

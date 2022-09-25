@@ -5,17 +5,38 @@ const Track = require("../models/Track");
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.get('/', async (req, res) => {
     const token = req.get('Authorization');
 
     if (!token) {
-        return res.status(401).send({error: 'Unauthorized'});
+        return res.status(401).send({error: 'No token present!'});
     }
 
     const user = await User.findOne({token});
 
     if (!user) {
-        return res.status(401).send({error: 'Token wrong!'});
+        return res.status(401).send({error: 'Wrong token!'});
+    }
+
+    try {
+        const history = await TrackHistory.find({user: user._id});
+        res.send(history);
+    } catch (e) {
+        return res.status(500);
+    }
+});
+
+router.post('/', async (req, res) => {
+    const token = req.get('Authorization');
+
+    if (!token) {
+        return res.status(401).send({error: 'No token present!'});
+    }
+
+    const user = await User.findOne({token});
+
+    if (!user) {
+        return res.status(401).send({error: 'Wrong token!'});
     }
 
 
@@ -27,7 +48,7 @@ router.post('/', async (req, res) => {
 
 
     try {
-        await Track.findOne({_id: req.body.track});
+        await Track.findOne({_id: TrackHistoryData.track});
     } catch {
         return res.status(404).send({error: 'Track not found!'});
     }
