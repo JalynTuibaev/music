@@ -5,6 +5,7 @@ import {getTracks} from "../../store/actions/tracksActions";
 import {Box, Card, CardActionArea, CardContent, Typography} from "@mui/material";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import {clearCurrentArtist} from "../../store/actions/currentArtistActions";
+import {addTrackHistory} from "../../store/actions/trackHistoriesActions";
 
 const Album = () => {
     const dispatch = useDispatch();
@@ -23,6 +24,10 @@ const Album = () => {
         };
     }, [dispatch]);
 
+    const onClickTrack = (id) => {
+        dispatch(addTrackHistory(id));
+    };
+
 
 
     let render = tracks && (
@@ -40,7 +45,7 @@ const Album = () => {
             <Box display='flex' flexWrap='wrap' justifyContent='flex-start'>
                 {tracks.map(track => (
                     <Card sx={{ width: 350, margin: '10px' }} key={track._id}>
-                        <CardActionArea>
+                        <CardActionArea onClick={() => onClickTrack(track._id)}>
                             <CardContent>
                                 <Typography sx={{wordWrap: 'break-word'}} gutterBottom variant="h6" component="div">
                                     №{track.number} Название: {track.name}

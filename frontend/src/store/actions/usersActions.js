@@ -7,7 +7,7 @@ export const REGISTER_USER_FAILURE = 'REGISTER_USER_FAILURE';
 export const CLEAR_REGISTER_ERRORS = 'CLEAR_REGISTER_ERRORS';
 
 const registerUserRequest = () => ({type: REGISTER_USER_REQUEST});
-const registerUserSuccess = () => ({type: REGISTER_USER_SUCCESS});
+const registerUserSuccess = user => ({type: REGISTER_USER_SUCCESS, payload: user});
 const registerUserFailure = error => ({type: REGISTER_USER_FAILURE, payload: error});
 export const clearRegisterErrors = () => ({type: CLEAR_REGISTER_ERRORS});
 
@@ -27,7 +27,7 @@ export const registerUser = userData => {
 
         try {
             const user = await axiosApi.post('/users', userData);
-            dispatch(registerUserSuccess(user));
+            dispatch(registerUserSuccess(user.data.token));
             dispatch(historyPush('/'));
         } catch (e) {
             if (e.response && e.response.data) {
@@ -45,7 +45,7 @@ export const loginUser = userData => {
             dispatch(loginUserRequest());
             const response = await axiosApi.post('/users/sessions', userData);
 
-            dispatch(loginUserSuccess(response.data));
+            dispatch(loginUserSuccess(response.data.token));
             dispatch(historyPush('/'));
         } catch (e) {
             if (e.response && e.response.data) {

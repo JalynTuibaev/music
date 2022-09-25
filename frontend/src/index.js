@@ -12,6 +12,7 @@ import './index.css';
 import currentArtistReducer from "./store/reducers/currentArtistReducer";
 import usersReducer from "./store/reducers/usersReducer";
 import history from "./history";
+import trackHistoriesReducer from "./store/reducers/trackHistoriesReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     tracks: tracksReducer,
     currentArtist: currentArtistReducer,
     users: usersReducer,
+    trackHistories: trackHistoriesReducer,
 });
 
 const store = createStore(
