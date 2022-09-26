@@ -11,7 +11,15 @@ router.get('/', async (req, res) => {
     }
 
     try {
-        const tracks = await Track.find(query).sort([['number', -1]]).populate('album', 'name artist');
+        const tracks = await Track.find(query).sort([['number', -1]]).populate({
+            path: 'album',
+            select: 'name artist',
+            populate: {
+                path: 'artist',
+                select: 'name',
+                model: 'Artist'
+            }
+        });
         res.send(tracks);
     } catch (e) {
         res.sendStatus(500);

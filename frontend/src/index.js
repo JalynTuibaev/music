@@ -9,7 +9,6 @@ import albumsReducer from "./store/reducers/albumsReducer";
 import tracksReducer from "./store/reducers/tracksReducer";
 import App from './App';
 import './index.css';
-import currentArtistReducer from "./store/reducers/currentArtistReducer";
 import usersReducer from "./store/reducers/usersReducer";
 import history from "./history";
 import trackHistoriesReducer from "./store/reducers/trackHistoriesReducer";
@@ -20,7 +19,6 @@ const rootReducer = combineReducers({
     artists: artistsReducer,
     albums: albumsReducer,
     tracks: tracksReducer,
-    currentArtist: currentArtistReducer,
     users: usersReducer,
     trackHistories: trackHistoriesReducer,
 });

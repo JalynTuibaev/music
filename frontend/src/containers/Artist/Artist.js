@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
 import {getArtistAlbums} from "../../store/actions/albumsActions";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import {currentArtist} from "../../store/actions/currentArtistActions";
 
 const Artist = () => {
     const dispatch = useDispatch();
@@ -17,8 +16,7 @@ const Artist = () => {
         dispatch(getArtistAlbums(match.params.id));
     }, [dispatch, match.params.id]);
 
-    const onClickAlbum = (id, name) => {
-        dispatch(currentArtist(name));
+    const onClickAlbum = (id) => {
         history.push(`/albums/${id}`);
     };
 
@@ -32,7 +30,7 @@ const Artist = () => {
             <Box display='flex' flexWrap='wrap' justifyContent='flex-start'>
                 {albums.map(album => (
                     <Card sx={{ width: 250, margin: '10px' }} key={album._id}>
-                        <CardActionArea onClick={() => onClickAlbum(album._id, album.artist.name)}>
+                        <CardActionArea onClick={() => onClickAlbum(album._id)}>
                             <CardMedia
                                 component="img"
                                 height="200"
