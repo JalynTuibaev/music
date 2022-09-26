@@ -11,6 +11,7 @@ const Album = () => {
     const match = useRouteMatch();
     const tracks = useSelector(state => state.tracks.tracks);
     const loading = useSelector(state => state.tracks.loading);
+    const addLoading = useSelector(state => state.trackHistories.addLoading);
 
     useEffect(() => {
         dispatch(getTracks(match.params.id));
@@ -58,7 +59,7 @@ const Album = () => {
         render = <h1>Tracks not found</h1>
     }
 
-    if (loading) {
+    if (loading || addLoading) {
         render = <Spinner/>;
     }
 
