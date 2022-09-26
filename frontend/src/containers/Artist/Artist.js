@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useHistory, useRouteMatch} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getArtistAlbums} from "../../store/actions/albumsActions";
 import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
+import {getArtistAlbums} from "../../store/actions/albumsActions";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import {currentArtist} from "../../store/actions/currentArtistActions";
 

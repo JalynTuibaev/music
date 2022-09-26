@@ -19,7 +19,21 @@ router.get('/', async (req, res) => {
     }
 
     try {
-        const history = await TrackHistory.find({user: user._id});
+        const history = await TrackHistory.find({user: user._id}).sort([['datetime', -1]]).populate({
+            path: 'track',
+            select: 'name album',
+            populate: {
+                path: 'album',
+                select: 'artist',
+                model: 'Album',
+                populate: {
+                    path: 'artist',
+                    select: 'name',
+                    model: 'Artist'
+                }
+            }
+        });
+
         res.send(history);
     } catch (e) {
         return res.status(500);

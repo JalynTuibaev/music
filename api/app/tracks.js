@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     }
 
     try {
-        const tracks = await Track.find(query).sort([['number', -1]]).populate('album', 'name artist').populate('album.artist', 'name');
+        const tracks = await Track.find(query).sort([['number', -1]]).populate('album', 'name artist');
         res.send(tracks);
     } catch (e) {
         res.sendStatus(500);

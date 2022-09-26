@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {getArtists} from "../../store/actions/artistsActions";
-import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
 import {useHistory} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
+import {getArtists} from "../../store/actions/artistsActions";
 import Spinner from "../../components/UI/Spinner/Spinner";
 
 const Artists = () => {

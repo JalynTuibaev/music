@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Avatar, Container, Grid, Link, Typography} from "@mui/material";
+import {Link as RouterLink} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {makeStyles} from "tss-react/mui";
+import {Alert, Avatar, Container, Grid, Link, Typography} from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
 import {LockOutlined} from "@mui/icons-material";
 import FormElement from "../../components/UI/Form/FormElement/FormElement";
-import {makeStyles} from "tss-react/mui";
-import {useDispatch, useSelector} from "react-redux";
 import {clearRegisterErrors, registerUser} from "../../store/actions/usersActions";
-import {Link as RouterLink} from "react-router-dom";
 
 const useStyles = makeStyles()(theme => ({
     paper: {
@@ -57,14 +57,6 @@ const Register = () => {
         dispatch(registerUser(user));
     };
 
-    const getFieldError = fieldName => {
-        try {
-            return error.errors[fieldName].message;
-        } catch {
-            return undefined;
-        }
-    };
-
     return (
         <Container maxWidth='xs' >
             <div className={classes.paper}>
@@ -74,6 +66,13 @@ const Register = () => {
                 <Typography variant='h5'>
                     Sign up
                 </Typography>
+
+                {error && (
+                    <Alert severity="error" className={classes.alert}>
+                        Error! {error.errors.username.message}
+                    </Alert>
+                )}
+
                 <Grid
                     component='form'
                     className={classes.form}
@@ -87,15 +86,15 @@ const Register = () => {
                         name="username"
                         label="Username"
                         value={user.username}
-                        error={getFieldError('username')}
+                        required={true}
                     />
                     <FormElement
                         onChange={onInputChange}
                         name="password"
                         label="Password"
                         value={user.password}
-                        error={getFieldError('password')}
                         type='password'
+                        required={true}
                     />
                     <LoadingButton
                         sx={{width: '80%', margin: '10px auto'}}
