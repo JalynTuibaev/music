@@ -1,25 +1,13 @@
 const express = require('express');
-const User = require('../models/User');
 const TrackHistory = require('../models/TrackHistory');
 const Track = require("../models/Track");
+const auth = require("../middleware/auth");
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    const token = req.get('Authorization');
-
-    if (!token) {
-        return res.status(401).send({error: 'No token present!'});
-    }
-
-    const user = await User.findOne({token});
-
-    if (!user) {
-        return res.status(401).send({error: 'Wrong token!'});
-    }
-
+router.get('/', auth, async (req, res) => {
     try {
-        const history = await TrackHistory.find({user: user._id}).sort([['datetime', -1]]).populate({
+        const history = await TrackHistory.find({user: req.user._id}).sort([['datetime', -1]]).populate({
             path: 'track',
             select: 'name album',
             populate: {
@@ -40,19 +28,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
-    const token = req.get('Authorization');
-
-    if (!token) {
-        return res.status(401).send({error: 'No token present!'});
-    }
-
-    const user = await User.findOne({token});
-
-    if (!user) {
-        return res.status(401).send({error: 'Wrong token!'});
-    }
-
+router.post('/', auth, async (req, res) => {
     const track = await Track.findOne({_id: req.body.track});
 
     if (!track) {
@@ -61,7 +37,7 @@ router.post('/', async (req, res) => {
 
 
     const TrackHistoryData = {
-        user: user.id,
+        user: req.user.id,
         track: req.body.track,
         datetime: new Date().toISOString(),
     };

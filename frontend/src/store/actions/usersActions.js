@@ -21,13 +21,21 @@ const loginUserSuccess = user => ({type: LOGIN_USER_SUCCESS, payload: user});
 const loginUserFailure = error => ({type: LOGIN_USER_FAILURE, payload: error});
 export const clearLoginErrors = () => ({type: CLEAR_LOGIN_ERRORS});
 
+export const LOGOUT_USER_REQUEST = 'LOGOUT_USER_REQUEST';
+export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
+export const LOGOUT_USER_FAILURE = 'LOGOUT_USER_FAILURE';
+
+const logoutUserRequest = () => ({type: LOGOUT_USER_REQUEST});
+const logoutUserSuccess = () => ({type: LOGOUT_USER_SUCCESS});
+const logoutUserFailure = error => ({type: LOGOUT_USER_FAILURE, payload: error});
+
 export const registerUser = userData => {
     return async dispatch => {
         dispatch(registerUserRequest());
 
         try {
             const user = await axiosApi.post('/users', userData);
-            dispatch(registerUserSuccess(user.data.token));
+            dispatch(registerUserSuccess(user.data));
             dispatch(historyPush('/'));
         } catch (e) {
             if (e.response && e.response.data) {
@@ -45,7 +53,7 @@ export const loginUser = userData => {
             dispatch(loginUserRequest());
             const response = await axiosApi.post('/users/sessions', userData);
 
-            dispatch(loginUserSuccess(response.data.token));
+            dispatch(loginUserSuccess(response.data));
             dispatch(historyPush('/'));
         } catch (e) {
             if (e.response && e.response.data) {
@@ -53,6 +61,22 @@ export const loginUser = userData => {
             } else {
                 dispatch(loginUserFailure({global: 'No internet'}));
             }
+        }
+    };
+};
+
+export const logoutUser = () => {
+    return  async (dispatch, getState) => {
+        try {
+            const token = getState().users.user.token;
+            const headers = {'Authorization': token};
+            dispatch(logoutUserRequest());
+            await axiosApi.delete('/users/sessions', {headers});
+
+            dispatch(logoutUserSuccess());
+            dispatch(historyPush('/'));
+        } catch (e) {
+            dispatch(logoutUserFailure(e));
         }
     };
 };

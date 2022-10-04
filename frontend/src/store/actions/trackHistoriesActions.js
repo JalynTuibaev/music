@@ -20,12 +20,10 @@ const getTrackHistoryFailure = error => ({type: GET_TRACK_HISTORY_FAILURE, paylo
 
 export const addTrackHistory = (id) => {
     return async (dispatch, getState) => {
-        dispatch(addTrackHistoryRequest());
         try {
-            const headers = {
-                'Authorization': getState().users.user,
-            };
-
+            const token = getState().users.user && getState().users.user.token;
+            const headers = {'Authorization': token};
+            dispatch(addTrackHistoryRequest());
             await axiosApi.post('/track_history', {track: id}, {headers});
 
             dispatch(addTrackHistorySuccess());
@@ -51,6 +49,7 @@ export const addTrackHistory = (id) => {
                     progress: undefined,
                 });
             }
+
             dispatch(addTrackHistoryFailure(e));
         }
     };
@@ -60,9 +59,8 @@ export const getTrackHistory = () => {
     return async (dispatch, getState) => {
         dispatch(getTrackHistoryRequest());
         try {
-            const headers = {
-                'Authorization': getState().users.user,
-            };
+            const token = getState().users.user.token;
+            const headers = {'Authorization': token};
 
             const history = await axiosApi.get('/track_history', {headers});
 

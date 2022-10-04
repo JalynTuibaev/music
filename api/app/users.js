@@ -36,7 +36,23 @@ router.post('/sessions', async (req, res) => {
 
     await user.save({validateBeforeSave: false});
 
-    res.send({token: user.token});
+    res.send(user);
+});
+
+router.delete('/sessions', async (req, res) => {
+    const token = req.get('Authorization');
+    const success = {message: 'Success'};
+
+    if (!token) return res.send(success);
+
+    const user = await User.findOne({token});
+
+    if (!user) return res.send(success);
+
+    user.generateToken();
+    await user.save({validateBeforeSave: false});
+
+    return res.send({success, user});
 });
 
 module.exports = router;
