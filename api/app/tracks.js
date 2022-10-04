@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     }
 
     try {
-        const tracks = await Track.find(query).sort([['number', -1]]).populate({
+        const tracks = await Track.find(query).sort([['number', 1]]).populate({
             path: 'album',
             select: 'name artist',
             populate: {

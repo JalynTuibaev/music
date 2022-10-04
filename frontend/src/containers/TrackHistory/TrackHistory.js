@@ -29,7 +29,7 @@ const TrackHistory = () => {
                                 Трек: {history.track.name}
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
-                                Дата: {history.datetime}
+                                Дата: {new Date(history.datetime).toLocaleString()}
                             </Typography>
                         </CardContent>
                     </Card>

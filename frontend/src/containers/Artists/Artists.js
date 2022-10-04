@@ -27,7 +27,7 @@ const Artists = () => {
                         <CardMedia
                             component="img"
                             height="240"
-                            image={artist.image ? `http://localhost:8000/uploads/${artist.image}`: 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png'}
+                            image={artist.image ? `http://localhost:8000/${artist.image}`: 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png'}
                             alt={artist.name + ' image'}
                         />
                         <CardContent>

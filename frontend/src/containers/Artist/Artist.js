@@ -34,7 +34,7 @@ const Artist = () => {
                             <CardMedia
                                 component="img"
                                 height="200"
-                                image={album.image ? `http://localhost:8000/uploads/${album.image}`: 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png'}
+                                image={album.image ? `http://localhost:8000/${album.image}`: 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png'}
                                 alt={album.name + ' image'}
                             />
                             <CardContent>
