@@ -48,6 +48,7 @@ const UserMenu = ({user}) => {
                 }}
             >
                 <MenuItem onClick={handleClose} component={Link} to="/track_history">Track History</MenuItem>
+                <MenuItem onClick={handleClose} component={Link} to="/add_artist">Add Artist</MenuItem>
                 <MenuItem onClick={handleLogout} component={Link} to="/">Logout</MenuItem>
             </Menu>
         </div>

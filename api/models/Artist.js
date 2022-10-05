@@ -10,9 +10,14 @@ const ArtistSchema = new Schema({
    },
    info: String,
    image: String,
+    published: {
+       type: Boolean,
+       required: true,
+       default: false,
+    }
 });
 
-ArtistSchema.plugin(uniqueValidator, {message: 'Error, expected {PATH} to be unique'});
+ArtistSchema.plugin(uniqueValidator, {message: 'Error,  Artist name to be unique'});
 const Artist = mongoose.model('Artist', ArtistSchema);
 
 module.exports = Artist;

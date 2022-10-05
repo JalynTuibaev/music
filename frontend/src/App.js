@@ -7,6 +7,7 @@ import Album from "./containers/Album/Album";
 import Register from "./containers/Register/Register";
 import Login from "./containers/Login/Login";
 import TrackHistory from "./containers/TrackHistory/TrackHistory";
+import AddArtist from "./containers/AddArtist/AddArtist";
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
                 <Route path="/register" exact component={Register}/>
                 <Route path="/login" exact component={Login}/>
                 <Route path="/track_history" exact component={TrackHistory}/>
+                <Route path="/add_artist" exact component={AddArtist}/>
             </Switch>
         </Layout>
     );
