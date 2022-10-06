@@ -86,7 +86,7 @@ const AddAlbum = () => {
 
     let render = (
         <form onSubmit={submitFormHandler}>
-            <Typography variant='h5'>
+            <Typography variant='h5' paddingY='20px'>
                 Add Album
             </Typography>
             <Grid container direction='column' rowSpacing={2}>
@@ -103,6 +103,7 @@ const AddAlbum = () => {
 
                 <Grid item>
                     <FormSelect
+                        required={true}
                         onChange={inputChangeHandler}
                         name='artist'
                         options={artists ? artists: []}

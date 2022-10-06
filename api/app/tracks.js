@@ -29,10 +29,6 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const {name, album, duration} = req.body;
 
-    if (!name || !album) {
-        return res.status(400).send({error: 'Data not valid!'});
-    }
-
     const trackData = {
         name,
         album,
@@ -44,7 +40,7 @@ router.post('/', async (req, res) => {
         await track.save();
         res.send(track);
     } catch (e) {
-        res.status(400).send({error: e.errors});
+        res.status(400).send(e);
     }
 });
 
