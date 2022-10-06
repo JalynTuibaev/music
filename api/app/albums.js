@@ -7,6 +7,7 @@ const config = require('../config');
 const Album = require('../models/Album');
 const auth = require("../middleware/auth");
 const permit = require("../middleware/permit");
+const Track = require("../models/Track");
 
 const router = express.Router();
 
@@ -88,6 +89,7 @@ router.delete('/', [auth, permit('admin')], async (req, res) => {
 
     try {
         await Album.findByIdAndRemove(album);
+        await Track.deleteMany({album: album});
         res.send({message: 'success'});
     } catch (e) {
         res.status(403).send(e);

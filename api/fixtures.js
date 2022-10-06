@@ -32,7 +32,8 @@ const run = async () => {
     const [scrip, weeknd, jah] = await Artist.create({
         name: 'Скриптонит',
         info: 'Ади́ль Оралбе́кович Жале́лов, урожд. — Кулмагамбе́тов, более известный под сценическим псевдонимом Скриптони́т, — казахстанский исполнитель и музыкальный продюсер, основатель лейбла Musica36',
-        image: 'fixtures/scrip.jpeg'
+        image: 'fixtures/scrip.jpeg',
+        published: true,
     }, {
         name: 'The Weeknd',
         info: 'Abel Makkonen Tesfaye; род. 16 февраля 1990 года, Торонто, Онтарио, Канада), более известный под сценическим именем The Weeknd (Уи́кнд) — канадский певец, автор песен и музыкальный продюсер эфиопского происхождения. В конце 2010 года Тесфайе анонимно загрузил несколько песен на YouTube под именем «The Weeknd»',
@@ -47,7 +48,8 @@ const run = async () => {
         name: 'Дом с нормальными явлениями',
         artist: scrip._id,
         release: '24 ноября 2015 г.',
-        image: 'fixtures/dom-s-norm.jpg'
+        image: 'fixtures/dom-s-norm.jpg',
+        published: true,
     }, {
         name: 'Праздник на улице 36',
         artist: scrip._id,
@@ -73,15 +75,18 @@ const run = async () => {
     await Track.create({
         name: 'Интро',
         album: albumScrip1._id,
-        duration: '01:19'
+        duration: '01:19',
+        published: true,
     }, {
         name: 'Коньяк',
         album: albumScrip1._id,
-        duration: '02:29'
+        duration: '02:29',
+        published: true,
     }, {
         name: 'Притон',
         album: albumScrip1._id,
-        duration: '03:56'
+        duration: '03:56',
+        published: true,
     }, {
         name: 'Танцуй сама',
         album: albumScrip1._id,

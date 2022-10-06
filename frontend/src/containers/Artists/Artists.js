@@ -11,6 +11,8 @@ const Artists = () => {
     const user = useSelector(state => state.users.user);
     const artists = useSelector(state => state.artists.artists);
     const loading = useSelector(state => state.artists.loading);
+    const publishLoading = useSelector(state => state.albums.publishLoading);
+    const deleteLoading = useSelector(state => state.albums.deleteLoading);
 
     useEffect(() => {
         dispatch(getArtists());
@@ -75,7 +77,7 @@ const Artists = () => {
         );
     }
 
-    if (loading) {
+    if (loading || publishLoading || deleteLoading) {
         render = <Spinner/>;
     }
 

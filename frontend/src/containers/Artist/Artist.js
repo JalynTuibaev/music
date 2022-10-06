@@ -12,6 +12,8 @@ const Artist = () => {
     const user = useSelector(state => state.users.user);
     const albums = useSelector(state => state.albums.albums);
     const loading = useSelector(state => state.albums.loading);
+    const publishLoading = useSelector(state => state.albums.publishLoading);
+    const deleteLoading = useSelector(state => state.albums.deleteLoading);
 
     useEffect(() => {
         dispatch(getArtistAlbums(match.params.id));
@@ -100,7 +102,7 @@ const Artist = () => {
         render = <h1>Albums not found</h1>
     }
 
-    if (loading) {
+    if (loading || publishLoading || deleteLoading) {
         render = <Spinner/>;
     }
 
