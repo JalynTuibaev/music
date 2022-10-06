@@ -8,7 +8,6 @@ import {useDispatch} from "react-redux";
 import {logoutUser} from "../../../../store/actions/usersActions";
 
 const UserMenu = ({user}) => {
-    console.log(user);
     const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -49,6 +48,7 @@ const UserMenu = ({user}) => {
             >
                 <MenuItem onClick={handleClose} component={Link} to="/track_history">Track History</MenuItem>
                 <MenuItem onClick={handleClose} component={Link} to="/add_artist">Add Artist</MenuItem>
+                <MenuItem onClick={handleClose} component={Link} to="/add_album">Add Album</MenuItem>
                 <MenuItem onClick={handleLogout} component={Link} to="/">Logout</MenuItem>
             </Menu>
         </div>

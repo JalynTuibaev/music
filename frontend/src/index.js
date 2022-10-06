@@ -12,6 +12,8 @@ import './index.css';
 import usersReducer from "./store/reducers/usersReducer";
 import history from "./history";
 import trackHistoriesReducer from "./store/reducers/trackHistoriesReducer";
+import {ThemeProvider} from "@mui/material";
+import theme from "./theme";
 
 const saveToLocalStorage = state => {
     try {
@@ -64,9 +66,11 @@ store.subscribe(() => {
 
 const app = (
     <Provider store={store}>
-        <Router history={history}>
-            <App/>
-        </Router>
+        <ThemeProvider theme={theme}>
+            <Router history={history}>
+                <App/>
+            </Router>
+        </ThemeProvider>
     </Provider>
 );
 

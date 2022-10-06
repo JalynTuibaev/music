@@ -5,6 +5,7 @@ const {nanoid} = require('nanoid');
 
 const config = require('../config');
 const Album = require('../models/Album');
+const auth = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -49,12 +50,8 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', [auth, upload.single('image')], async (req, res) => {
     const {name, artist, release} = req.body;
-
-    if (!name || !artist || !release) {
-        return res.status(400).send({error: 'Data not valid!'});
-    }
 
     const albumData = {
         name,
@@ -64,7 +61,7 @@ router.post('/', upload.single('image'), async (req, res) => {
     };
 
     if (req.file) {
-        albumData.image = req.file.filename;
+        albumData.image = 'uploads/' + req.file.filename;
     }
 
     try {
@@ -72,7 +69,7 @@ router.post('/', upload.single('image'), async (req, res) => {
         await album.save();
         res.send(album);
     } catch (e) {
-        res.status(400).send({error: e.errors});
+        res.status(400).send(e);
     }
 });
 

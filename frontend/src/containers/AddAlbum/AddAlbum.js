@@ -3,27 +3,35 @@ import {useDispatch, useSelector} from "react-redux";
 import {Button, Grid, Typography} from "@mui/material";
 import {Redirect, useHistory} from "react-router-dom";
 import {toast} from "react-toastify";
-import {addArtist, clearAddArtistError} from "../../store/actions/artistsActions";
 import FormElement from "../../components/UI/Form/FormElement/FormElement";
 import FileInput from "../../components/UI/Form/FileInput/FileInput";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import {addAlbum, clearAddAlbumError} from "../../store/actions/albumsActions";
+import FormSelect from "../../components/UI/Form/FormSelect/FormSelect";
+import {getArtists} from "../../store/actions/artistsActions";
 
-const AddArtist = () => {
+const AddAlbum = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const user = useSelector(state => state.users.user);
-    const error = useSelector(state => state.artists.addError);
-    const loading = useSelector(state => state.artists.addLoading);
+    const artists = useSelector(state => state.artists.artists);
+    const error = useSelector(state => state.albums.addError);
+    const loading = useSelector(state => state.albums.addLoading);
 
-    const [artist, setArtist] = useState({
+    const [album, setAlbum] = useState({
         name: '',
-        info: '',
+        artist: '',
+        release: '',
         image: '',
     });
 
     useEffect(() => {
+        dispatch(getArtists());
+    }, [dispatch]);
+
+    useEffect(() => {
         return () => {
-            dispatch(clearAddArtistError());
+            dispatch(clearAddAlbumError());
         }
     }, [dispatch]);
 
@@ -45,18 +53,18 @@ const AddArtist = () => {
         e.preventDefault();
         const formData = new FormData();
 
-        Object.keys(artist).forEach(key => {
-            formData.append(key, artist[key]);
+        Object.keys(album).forEach(key => {
+            formData.append(key, album[key]);
         });
 
-        await dispatch(addArtist(formData));
+        await dispatch(addAlbum(formData));
         history.push('/');
     };
 
     const inputChangeHandler = e => {
         const {name, value} = e.target;
 
-        setArtist(prevState => {
+        setAlbum(prevState => {
             return {...prevState, [name]: value};
         });
     };
@@ -65,7 +73,7 @@ const AddArtist = () => {
         const name = e.target.name;
         const file = e.target.files[0];
 
-        setArtist(prevState => ({...prevState, [name]: file}));
+        setAlbum(prevState => ({...prevState, [name]: file}));
     };
 
     const getFieldError = fieldName => {
@@ -79,25 +87,40 @@ const AddArtist = () => {
     let render = (
         <form onSubmit={submitFormHandler}>
             <Typography variant='h5'>
-                Add Artist
+                Add Album
             </Typography>
             <Grid container direction='column' rowSpacing={2}>
                 <Grid item>
                     <FormElement
                         onChange={inputChangeHandler}
                         name='name'
-                        label='Artist'
-                        value={artist.name}
+                        label='Album'
+                        value={album.name}
                         required={true}
                         error={getFieldError('name')}
                     />
                 </Grid>
+
+                <Grid item>
+                    <FormSelect
+                        onChange={inputChangeHandler}
+                        name='artist'
+                        options={artists ? artists: []}
+                        label='Artist'
+                        value={album.artist}
+                        error={getFieldError('artist')}
+                    />
+                </Grid>
+
                 <Grid item>
                     <FormElement
+                        type='date'
+                        required={true}
                         onChange={inputChangeHandler}
-                        name='info'
-                        label='Artist information'
-                        value={artist.info}
+                        name='release'
+                        label=''
+                        value={album.release}
+                        error={getFieldError('release')}
                     />
                 </Grid>
                 <Grid item>
@@ -108,7 +131,7 @@ const AddArtist = () => {
                     />
                 </Grid>
                 <Grid item>
-                    <Button type="submit" variant="contained">Add Artist</Button>
+                    <Button type="submit" variant="contained">Add Album</Button>
                 </Grid>
             </Grid>
         </form>
@@ -118,6 +141,7 @@ const AddArtist = () => {
         render = <Spinner/>
     }
 
+
     return (
         <>
             {render}
@@ -125,4 +149,4 @@ const AddArtist = () => {
     );
 };
 
-export default AddArtist;
+export default AddAlbum;

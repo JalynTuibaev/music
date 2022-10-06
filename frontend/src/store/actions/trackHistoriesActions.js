@@ -67,6 +67,16 @@ export const getTrackHistory = () => {
             dispatch(getTrackHistorySuccess(history.data));
         }catch (e) {
             dispatch(getTrackHistoryFailure(e));
+
+            toast.warn('You need login!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
             dispatch(historyPush('/login'));
         }
     };

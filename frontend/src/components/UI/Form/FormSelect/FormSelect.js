@@ -19,7 +19,7 @@ const FormSelect = ({label, name, value, onChange, options, error, required}) =>
         >
           {options.map(option => (
             <MenuItem key={option._id} value={option._id}>
-              {option.title}
+              {option.name}
             </MenuItem>
           ))}
         </Select>

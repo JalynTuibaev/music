@@ -17,7 +17,7 @@ const ArtistSchema = new Schema({
     }
 });
 
-ArtistSchema.plugin(uniqueValidator, {message: 'Error,  Artist name to be unique'});
+ArtistSchema.plugin(uniqueValidator, {message: 'Error,  {PATH} to be unique'});
 const Artist = mongoose.model('Artist', ArtistSchema);
 
 module.exports = Artist;

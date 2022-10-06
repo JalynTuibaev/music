@@ -13,7 +13,12 @@ const TrackSchema = new Schema({
         ref: 'Album',
         required: true,
     },
-    duration: String
+    duration: String,
+    published: {
+        type: Boolean,
+        required: true,
+        default: false,
+    }
 });
 
 

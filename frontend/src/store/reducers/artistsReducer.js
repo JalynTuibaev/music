@@ -1,6 +1,6 @@
 import {
     ADD_ARTIST_FAILURE,
-    ADD_ARTIST_REQUEST, ADD_ARTIST_SUCCESS,
+    ADD_ARTIST_REQUEST, ADD_ARTIST_SUCCESS, CLEAR_ADD_ARTIST_ERROR,
     GET_ARTISTS_FAILURE,
     GET_ARTISTS_REQUEST,
     GET_ARTISTS_SUCCESS
@@ -29,6 +29,8 @@ const artistsReducer = (state = initialState, action) => {
             return {...state, addLoading: false};
         case ADD_ARTIST_FAILURE:
             return {...state, addError: action.payload, addLoading: false};
+        case CLEAR_ADD_ARTIST_ERROR:
+            return {...state, addError: null};
 
         default:
             return state;

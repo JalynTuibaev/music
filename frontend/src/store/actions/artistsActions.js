@@ -16,6 +16,11 @@ const addArtistRequest = () => ({type: ADD_ARTIST_REQUEST});
 const addArtistSuccess = () => ({type: ADD_ARTIST_SUCCESS});
 const addArtistFailure = error => ({type: ADD_ARTIST_FAILURE, payload: error});
 
+export const CLEAR_ADD_ARTIST_ERROR = 'CLEAR_ADD_ARTIST_ERROR';
+export const clearAddArtistError = () => ({type: CLEAR_ADD_ARTIST_ERROR});
+
+
+
 export const getArtists = () => {
     return async dispatch => {
         try {

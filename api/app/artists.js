@@ -33,10 +33,6 @@ router.get('/', async (req, res) => {
 router.post('/', [auth, upload.single('image')], async (req, res) => {
     const {name, info} = req.body;
 
-    if (!name) {
-        return res.status(400).send({error: 'Name is Required!'});
-    }
-
     const artistData = {
         name,
         info: info || null,
@@ -52,7 +48,7 @@ router.post('/', [auth, upload.single('image')], async (req, res) => {
         await artist.save();
         res.send(artist);
    } catch (e) {
-        res.status(400).send({error: e.errors});
+       res.status(400).send(e);
    }
 });
 
