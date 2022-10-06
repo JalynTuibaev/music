@@ -6,6 +6,7 @@ const {nanoid} = require('nanoid');
 const config = require('../config');
 const Album = require('../models/Album');
 const auth = require("../middleware/auth");
+const permit = require("../middleware/permit");
 
 const router = express.Router();
 
@@ -70,6 +71,26 @@ router.post('/', [auth, upload.single('image')], async (req, res) => {
         res.send(album);
     } catch (e) {
         res.status(400).send(e);
+    }
+});
+
+router.post('/:id/publish', [auth, permit('admin')], async (req, res) => {
+    try {
+        await Album.findByIdAndUpdate({_id: req.params.id}, {$set: {published: true}});
+        res.send({message: 'success'});
+    } catch (e) {
+        res.status(400).send(e.message);
+    }
+});
+
+router.delete('/', [auth, permit('admin')], async (req, res) => {
+    const {album} = req.body;
+
+    try {
+        await Album.findByIdAndRemove(album);
+        res.send({message: 'success'});
+    } catch (e) {
+        res.status(403).send(e);
     }
 });
 

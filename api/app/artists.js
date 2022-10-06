@@ -55,11 +55,10 @@ router.post('/', [auth, upload.single('image')], async (req, res) => {
 
 router.post('/:id/publish', [auth, permit('admin')], async (req, res) => {
     try {
-        console.log(req.params.id);
         await Artist.findByIdAndUpdate({_id: req.params.id}, {$set: {published: true}});
         res.send({message: 'success'});
     } catch (e) {
-
+        res.status(400).send(e.message);
     }
 });
 
