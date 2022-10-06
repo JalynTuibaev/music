@@ -8,7 +8,7 @@ import {
 } from "../actions/tracksActions";
 
 const initialState = {
-    tracks: null,
+    tracks: [],
     loading: false,
     error: null,
     addError: null,

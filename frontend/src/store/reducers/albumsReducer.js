@@ -12,12 +12,12 @@ import {
 } from "../actions/albumsActions";
 
 const initialState = {
-    albums: null,
+    albums: [],
     loading: false,
     error: null,
     addLoading: false,
     addError: null,
-    allAlbums: null,
+    allAlbums: [],
     allAlbumsError: null,
     allAlbumsLoading: false,
 };

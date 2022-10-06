@@ -13,7 +13,7 @@ const TrackHistory = () => {
         dispatch(getTrackHistory());
     }, [dispatch]);
 
-    let render = trackHistory && (
+    let render = (
         <>
             <Typography variant='h4'>
                 Track History:

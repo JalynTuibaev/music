@@ -24,7 +24,7 @@ const Album = () => {
 
 
 
-    let render = tracks && (
+    let render = (
         <>
             {tracks[0] ?
                 (<>
@@ -55,7 +55,7 @@ const Album = () => {
         </>
     );
 
-    if (tracks && tracks.length === 0) {
+    if (tracks.length === 0) {
         render = <h1>Tracks not found</h1>
     }
 

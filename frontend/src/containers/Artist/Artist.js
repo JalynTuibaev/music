@@ -20,7 +20,7 @@ const Artist = () => {
         history.push(`/albums/${id}`);
     };
 
-    let render = albums && (
+    let render = (
         <>
             {albums[0] ?
                 <Typography variant='h4' padding='5px'>
@@ -52,7 +52,7 @@ const Artist = () => {
         </>
     );
 
-    if (albums && albums.length === 0) {
+    if (albums.length === 0) {
         render = <h1>Albums not found</h1>
     }
 

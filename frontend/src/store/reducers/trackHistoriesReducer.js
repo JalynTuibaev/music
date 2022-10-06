@@ -5,7 +5,7 @@ import {
 } from "../actions/trackHistoriesActions";
 
 const initialState = {
-    trackHistory: null,
+    trackHistory: [],
     addLoading: false,
     addError: null,
     getLoading: false,
