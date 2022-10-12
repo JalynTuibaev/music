@@ -17,16 +17,18 @@ const run = async () => {
         await mongoose.connection.db.dropCollection(coll.name);
     }
 
-    const [user1, user2] = await User.create({
-        username: 'admin',
+    await User.create({
+        email: 'admin@gmail.com',
         password: 'admin',
         token: nanoid(),
         role: 'admin',
+        displayName: 'Admin'
     }, {
-        username: 'user',
+        email: 'user@gmail.com',
         password: 'user',
         token: nanoid(),
         role: 'user',
+        displayName: 'User'
     });
 
     const [scrip, weeknd, jah] = await Artist.create({

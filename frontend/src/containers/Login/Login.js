@@ -7,6 +7,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import {LockOutlined} from "@mui/icons-material";
 import FormElement from "../../components/UI/Form/FormElement/FormElement";
 import {clearLoginErrors, loginUser} from "../../store/actions/usersActions";
+import FacebookLogin from "../../components/FacebookLogin/FacebookLogin";
 
 const useStyles = makeStyles()(theme => ({
     paper: {
@@ -15,7 +16,7 @@ const useStyles = makeStyles()(theme => ({
         flexDirection: 'column',
         alignItems: 'center',
         border: '3px solid #1976d2',
-        padding: '15px'
+        padding: '10px'
     },
     avatar: {
         margin: theme.spacing(1),
@@ -35,7 +36,8 @@ const Login = () => {
     const error = useSelector(state => state.users.loginError);
     const loading = useSelector(state => state.users.loginLoading);
     const [user, setUser] = useState({
-        username: '',
+        email: '',
+        displayName: '',
         password: ''
     });
 
@@ -75,19 +77,19 @@ const Login = () => {
 
                 <Grid
                     component='form'
-                    className={classes.form}
                     onSubmit={onSubmitForm}
-                    display='flex'
-                    flexDirection='column'
-                    alignItems='center'
+                    spacing={2}
+                    container
+                    padding={2}
                 >
                     <FormElement
                         onChange={onInputChange}
-                        name="username"
-                        label="Username"
-                        value={user.username}
+                        name="email"
+                        label="Email"
+                        value={user.email}
                         required={true}
                     />
+
                     <FormElement
                         onChange={onInputChange}
                         name="password"
@@ -96,15 +98,22 @@ const Login = () => {
                         type='password'
                         required={true}
                     />
-                    <LoadingButton
-                        sx={{width: '80%', margin: '10px auto'}}
-                        component="button"
-                        type='submit'
-                        loading={loading}
-                        variant="contained"
-                    >
-                        Sign in
-                    </LoadingButton>
+
+                    <Grid item xs={12}>
+                        <LoadingButton
+                            fullWidth={true}
+                            component="button"
+                            type='submit'
+                            loading={loading}
+                            variant="contained"
+                        >
+                            Sign in
+                        </LoadingButton>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <FacebookLogin/>
+                    </Grid>
                 </Grid>
 
                 <Grid container justifyContent="flex-end" marginRight='20px'>

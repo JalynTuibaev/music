@@ -66,7 +66,7 @@ router.post('/facebookLogin', async (req, res) => {
                 email: req.body.email,
                 displayName: req.body.name,
                 password: nanoid(),
-                avatarImage: req.body.image,
+                avatarImage: req.body.picture.data.url,
                 facebookId: req.body.id
             });
         }

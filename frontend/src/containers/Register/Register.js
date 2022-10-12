@@ -7,6 +7,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import {LockOutlined} from "@mui/icons-material";
 import FormElement from "../../components/UI/Form/FormElement/FormElement";
 import {clearRegisterErrors, registerUser} from "../../store/actions/usersActions";
+import FacebookLogin from "../../components/FacebookLogin/FacebookLogin";
 
 const useStyles = makeStyles()(theme => ({
     paper: {
@@ -15,7 +16,7 @@ const useStyles = makeStyles()(theme => ({
         flexDirection: 'column',
         alignItems: 'center',
         border: '3px solid #1976d2',
-        padding: '15px'
+        padding: '10px'
     },
     avatar: {
         margin: theme.spacing(1),
@@ -36,7 +37,9 @@ const Register = () => {
     const error = useSelector(state => state.users.registerError);
     const loading = useSelector(state => state.users.registerLoading);
     const [user, setUser] = useState({
-        username: '',
+        email: '',
+        displayName: '',
+        avatarImage: '',
         password: ''
     });
 
@@ -58,7 +61,7 @@ const Register = () => {
     };
 
     return (
-        <Container maxWidth='xs' >
+        <Container maxWidth='xs'>
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
                     <LockOutlined/>
@@ -68,25 +71,37 @@ const Register = () => {
                 </Typography>
 
                 {error && (
-                    <Alert severity="error" className={classes.alert}>
+                    <Alert severity="error" className={classes.avatar}>
                         Error! {error.errors.username.message}
                     </Alert>
                 )}
 
                 <Grid
                     component='form'
-                    className={classes.form}
                     onSubmit={onSubmitForm}
-                    display='flex'
-                    flexDirection='column'
-                    alignItems='center'
+                    container
+                    spacing={2}
+                    padding={2}
                 >
                     <FormElement
                         onChange={onInputChange}
-                        name="username"
-                        label="Username"
-                        value={user.username}
+                        name="email"
+                        label="Email"
+                        value={user.email}
                         required={true}
+                    />
+                    <FormElement
+                        onChange={onInputChange}
+                        name="displayName"
+                        label="Display Name"
+                        value={user.displayName}
+                        required={true}
+                    />
+                    <FormElement
+                        onChange={onInputChange}
+                        name="avatarImage"
+                        label="Avatar"
+                        value={user.avatarImage}
                     />
                     <FormElement
                         onChange={onInputChange}
@@ -96,16 +111,24 @@ const Register = () => {
                         type='password'
                         required={true}
                     />
-                    <LoadingButton
-                        sx={{width: '80%', margin: '10px auto'}}
-                        component="button"
-                        type='submit'
-                        loading={loading}
-                        variant="contained"
-                    >
-                        Sign up
-                    </LoadingButton>
+
+                    <Grid item xs={12}>
+                        <LoadingButton
+                            fullWidth
+                            component="button"
+                            type='submit'
+                            loading={loading}
+                            variant="contained"
+                        >
+                            Sign up
+                        </LoadingButton>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <FacebookLogin/>
+                    </Grid>
                 </Grid>
+
                 <Grid container justifyContent="flex-end" marginTop='10px'>
                     <Grid item>
                         <Link component={RouterLink} to="/login">
