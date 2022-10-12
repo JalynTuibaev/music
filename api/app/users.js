@@ -1,12 +1,15 @@
 const express = require('express');
 const User = require('../models/User');
+const config = require('../config');
+const axios = require("axios");
+const {nanoid} = require("nanoid");
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
     try {
-        const {username, password} = req.body;
-        const userData = {username, password};
+        const {email, password, displayName} = req.body;
+        const userData = {email, password, displayName};
 
         const user = new User(userData);
         user.generateToken();
@@ -18,9 +21,9 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/sessions', async (req, res) => {
-    const {username, password} = req.body;
+    const {email, password} = req.body;
 
-    const user = await User.findOne({username});
+    const user = await User.findOne({email});
 
     if (!user) {
         return res.status(401).send({message: 'Credentials are wrong!'});
@@ -37,6 +40,44 @@ router.post('/sessions', async (req, res) => {
     await user.save({validateBeforeSave: false});
 
     res.send(user);
+});
+
+router.post('/facebookLogin', async (req, res) => {
+    const inputToken = req.body.accessToken;
+    const accessToken = config.facebook.appId + '|' + config.facebook.appSecret;
+
+    const debugTokenUrl = `https://graph.facebook.com/debug_token?input_token=${inputToken}&access_token=${accessToken}`;
+
+    try {
+        const response = axios.get(debugTokenUrl);
+
+        if (response.data.data.error) {
+            return res.status(401).send({message: 'Facebook token incorrect!'});
+        }
+
+        if (response.data.data.user_id !== req.body.id) {
+            return res.status(401).send({message: 'Wrong User ID'});
+        }
+
+        let user = await User.find({facebookId: req.body.id});
+
+        if (!user) {
+            user = new User({
+                email: req.body.email,
+                displayName: req.body.name,
+                password: nanoid(),
+                avatarImage: req.body.image,
+                facebookId: req.body.id
+            });
+        }
+
+        user.generateToken();
+        await user.save({validateBeforeSave: false});
+
+        return res.send(user);
+    } catch (e) {
+        return res.status(401).send({message: 'Facebook token incorrect'});
+    }
 });
 
 router.delete('/sessions', async (req, res) => {
