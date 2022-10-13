@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     try {
-        const {email, password, displayName} = req.body;
-        const userData = {email, password, displayName};
+        const {email, password, displayName, avatarImage} = req.body;
+        const userData = {email, password, displayName, avatarImage};
 
         const user = new User(userData);
         user.generateToken();
@@ -49,7 +49,7 @@ router.post('/facebookLogin', async (req, res) => {
     const debugTokenUrl = `https://graph.facebook.com/debug_token?input_token=${inputToken}&access_token=${accessToken}`;
 
     try {
-        const response = axios.get(debugTokenUrl);
+        const response = await axios.get(debugTokenUrl);
 
         if (response.data.data.error) {
             return res.status(401).send({message: 'Facebook token incorrect!'});
@@ -59,7 +59,7 @@ router.post('/facebookLogin', async (req, res) => {
             return res.status(401).send({message: 'Wrong User ID'});
         }
 
-        let user = await User.find({facebookId: req.body.id});
+        let user = await User.findOne({facebookId: req.body.id});
 
         if (!user) {
             user = new User({

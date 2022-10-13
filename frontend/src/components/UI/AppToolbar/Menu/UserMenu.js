@@ -6,6 +6,8 @@ import MenuItem from '@mui/material/MenuItem';
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {logoutUser} from "../../../../store/actions/usersActions";
+import {Avatar, Box} from "@mui/material";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const UserMenu = ({user}) => {
     const dispatch = useDispatch();
@@ -26,17 +28,27 @@ const UserMenu = ({user}) => {
     };
 
     return (
-        <div>
-            <Button
-                id="basic-button"
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-                style={{color: "inherit"}}
-            >
-                Hello, {user.username}!
-            </Button>
+        <Box>
+            <Box display='flex' alignItems='center'>
+                {
+                    user.avatarImage ? (
+                        <Avatar
+                            alt={user.displayName}
+                            src={user.avatarImage}
+                        />
+                    ): <AccountCircleIcon/>
+                }
+                <Button
+                    id="basic-button"
+                    aria-controls={open ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClick}
+                    style={{color: "inherit"}}
+                >
+                    {user.displayName}
+                </Button>
+            </Box>
             <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
@@ -52,7 +64,7 @@ const UserMenu = ({user}) => {
                 <MenuItem onClick={handleClose} component={Link} to="/add_track">Add Track</MenuItem>
                 <MenuItem onClick={handleLogout} component={Link} to="/">Logout</MenuItem>
             </Menu>
-        </div>
+        </Box>
     );
 };
 

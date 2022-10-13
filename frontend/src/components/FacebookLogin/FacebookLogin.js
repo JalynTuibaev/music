@@ -4,12 +4,13 @@ import {useDispatch} from "react-redux";
 import {facebookAppId} from "../../config";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import {Button} from "@mui/material";
+import {facebookLogin} from "../../store/actions/usersActions";
 
 const FacebookLogin = () => {
     const dispatch = useDispatch();
 
     const facebookResponse = response => {
-        console.log(response);
+        dispatch(facebookLogin(response));
     };
 
     return (
